@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script>
-      // Redirect all requests to index.html for SPA routing
-      var redirectTo = '/index.html' + location.search + location.hash;
-      location.replace(redirectTo);
+      var path = window.location.pathname.replace(/404\.html$/, '');
+      var redirectTo = path + 'index.html' + window.location.search + window.location.hash;
+      window.location.replace(redirectTo);
     </script>
   </head>
   <body>
