@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+      // Redirect all requests to index.html for SPA routing
+      var redirectTo = '/index.html' + location.search + location.hash;
+      location.replace(redirectTo);
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
