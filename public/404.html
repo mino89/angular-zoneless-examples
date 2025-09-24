@@ -5,7 +5,7 @@
     <title>Redirecting...</title>
     <script>
       var repo = '/angular-zoneless-examples/'; // Change this to your repository name
-      var redirectTo = repo + 'index.html' + window.location.search + window.location.hash;
+     var redirectTo = repo + 'index.html#' + window.location.pathname.replace(repo, '') + window.location.search + window.location.hash;
       window.location.replace(redirectTo);
     </script>
   </head>
