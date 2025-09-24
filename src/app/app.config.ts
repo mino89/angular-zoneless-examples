@@ -3,7 +3,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, withHashLocation, withInMemoryScrolling } from '@angular/router';
 import {
   NG_DOC_DEFAULT_PAGE_PROCESSORS,
   NG_DOC_DEFAULT_PAGE_SKELETON,
@@ -28,6 +28,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       [...routes, ...NG_DOC_ROUTING],
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
+      withHashLocation()
     ),
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
     provideNgDocContext(),
