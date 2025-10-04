@@ -1,49 +1,40 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router, RouterModule } from '@angular/router';
-import { TimerService } from '../../core/timer.service';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'ex-change-detector-ref',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule],
+  imports: [RouterModule, FormsModule],
   template: `
     <h2>ChangeDetectorRef</h2>
     <h3>Counter: {{ count }}</h3>
-    <button (click)="reload()">{{ enableCdr ? 'stop' : 'start'}}</button>
-    <button (click)="reset()">Reset</button>
+    <button #exButton>Increment</button>
+    <input type="checkbox" [(ngModel)]="enableCdr" /> Enable CDR
   `,
 })
-export class ChangeDetectorRefComponent implements OnInit, OnDestroy {
+export class ChangeDetectorRefComponent implements AfterViewInit {
   count = 0;
   enableCdr = false;
+  @ViewChild('exButton') exButton!: ElementRef<HTMLButtonElement>;
+  constructor(
+    private cdr: ChangeDetectorRef,
+  ) {}
 
-  constructor(private cdr: ChangeDetectorRef, private timer: TimerService) {}
-
-  ngOnInit() {
-    this.autoIncrement(this.enableCdr);
+  ngAfterViewInit(): void {
+    this.exButton.nativeElement.addEventListener('click', () => this.increment());
   }
 
-  reload() {
-    this.enableCdr = !this.enableCdr;
-    this.ngOnInit();
-  }
-
-  autoIncrement(markForCheck: boolean = false) {
-    if (this.timer.intervalId) this.timer.stop();
-    this.timer.start(() => {
-      this.count++;
-      console.log('Count:', this.count, 'MarkForCheck:', markForCheck);
-      if (markForCheck) this.cdr.markForCheck();
-    });
-  }
-
-  reset() {
-    this.count = 0;
-    this.enableCdr = false;
-    this.timer.stop();
-    this.cdr.markForCheck();
-  }
-  ngOnDestroy() {
-    this.reset();
+  increment() {
+    this.count++;
+    console.log('Incremented:', this.count);
+    this.enableCdr && this.cdr.markForCheck();
   }
 }

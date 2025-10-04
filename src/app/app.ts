@@ -1,5 +1,5 @@
 import { NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent , NgDocThemeToggleComponent} from "@ng-doc/app";
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {  } from "../../node_modules/@ng-doc/app/components/theme-toggle/index";
 
